@@ -13,7 +13,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 ```cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor```
 
-- Run batchList.py (with -l -c and -d, and with path to ntuples).
+- Run batchList.py (with -l for list, -c for copy to eos, and -d for the path to ntuples).
 
 ```python batchList.py -lc -d /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
 
@@ -25,7 +25,11 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 ```sed -i -e 's/SoftBjet_PhotonNtuples/CMSSW8028_2016/g' sampleSets.cfg```
 
 3. Third compile nEvents.C and run nEvts with the output stored in a file.
+
+- The script nEvts will take a long time to run (hours). You should use screen.
+
 ```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools
 make -j8
 ./nEvts -w > nEvents.txt 
 ```
