@@ -4,8 +4,8 @@
 
 Here is an example for updating sampleSets.cfg with new weights.
 For this example, we are changing from the SoftBjet_PhotonNtuples samples to the CMSSW8028_2016 samples.
-old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
-new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
+- old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
+- new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
 
 1. First create and copy new text files listing root files to EOS.
 
@@ -30,8 +30,9 @@ make -j8
 ./nEvts -w > nEvents.txt 
 ```
 
-4. Fourth run this script with options.
+4. Fourth run updateSamples.py with options (s for original cfg file, -e for output of nEvts, and -o for new output file).
 ```
 python updateSamples.py -s sampleSets.cfg -e nEvents.txt -o sampleSets_v2.cfg
 ```
+This will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
 
