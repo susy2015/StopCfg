@@ -31,8 +31,17 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 ```
 cd $CMSSW_BASE/src/SusyAnaTools/Tools
 make -j8
+screen
+cmsenv
+source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 ./nEvts -w > nEvents.txt 
 ```
+
+Here are some useful screen commands.
+- To detach screen, use ```CRTL-A D```.
+- To list screens, use ```screen -ls```.
+- To attach screen, use ```screen -r```.
+- To exit screen, use ```exit```.
 
 4. Fourth run updateSamples.py with options (s for original cfg file, -e for output of nEvts, and -o for new output file).
 ```
