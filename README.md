@@ -53,12 +53,15 @@ source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
-./nEvts -ws > nEvents.txt 
+./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-4. Fourth run updateSamples.py with options (s for original cfg file, -e for output of nEvts, and -o for new output file).
+When we run nEvts, we are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+
+4. Fourth run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
 ```
-python updateSamples.py -s sampleSets.cfg -e nEvents.txt -o sampleSets_v2.cfg
+python updateSamples.py -e nEvents.txt -s sampleSets.cfg -o sampleSets_v2.cfg > update.log
 ```
-This will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
+
+We redirect the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt. The updateSamples.py script will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
 
