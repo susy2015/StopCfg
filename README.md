@@ -1,5 +1,26 @@
 # StopCfg
 
+## Checkout Version of Cfg Files
+
+- Download repo.
+```
+git clone git@github.com:susy2015/StopCfg.git
+cd StopCfg
+```
+- List available tags.
+```
+git tag
+```
+- Checkout the tag that you want.
+```
+git checkout <my_favorite_tag>
+```
+For example, to checkout the config files for the CMSSW8028_2016 ntuples, use
+```
+git checkout CMSSW8028_2016
+```
+When you checkout a tag, you will be in a "detached HEAD" state. That is ok. You can make a branch if you like, or just explore. You can now copy the cfg files wherever you like.
+
 ## Update Cfg Files
 
 Here is an example for updating sampleSets.cfg with new weights.
