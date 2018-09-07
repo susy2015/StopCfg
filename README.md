@@ -9,7 +9,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 1. First create and copy new text files listing root files to EOS.
 
-- Go to SusyAnaTools condor area.
+- Go to SusyAnaTools/Tools/condor area.
 
 ```cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor```
 
@@ -19,6 +19,10 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 
 2. Second replace file paths in sample text files.
+
+- Go to SusyAnaTools/Tools area.
+
+```cd $CMSSW_BASE/src/SusyAnaTools/Tools```
 
 - replace SoftBjet_PhotonNtuples with CMSSW8028_2016
 
