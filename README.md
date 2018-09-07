@@ -30,11 +30,24 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
-- The script nEvts will take a long time to run (hours). You should use screen. When in screen, you are entering a new shell and a new environment. You will need to run some commands to obtain the desired environment. Bash users can begin with `source ~/.bash_profile`.
+- Go to SusyAnaTools/Tools area.
+
+```cd $CMSSW_BASE/src/SusyAnaTools/Tools```
+
+- Compile.
+
+```make -j8```
+
+- The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
+  - To enter screen, use ```screen```.
+  - To exit screen, use ```exit```.
+  - To attach screen, use ```screen -r```.
+  - To detach screen, use ```CRTL-A D```.
+  - To list screens, use ```screen -ls```.
+
+- When in screen, you are entering a new shell and a new environment. You will need to run some commands to obtain the desired environment. Bash users can begin with `source ~/.bash_profile`.
 
 ```
-cd $CMSSW_BASE/src/SusyAnaTools/Tools
-make -j8
 screen
 source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -42,12 +55,6 @@ cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 ./nEvts -w > nEvents.txt 
 ```
-
-Here are some useful screen commands.
-- To detach screen, use ```CRTL-A D```.
-- To list screens, use ```screen -ls```.
-- To attach screen, use ```screen -r```.
-- To exit screen, use ```exit```.
 
 4. Fourth run updateSamples.py with options (s for original cfg file, -e for output of nEvts, and -o for new output file).
 ```
