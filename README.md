@@ -28,7 +28,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 ```sed -i -e 's/SoftBjet_PhotonNtuples/CMSSW8028_2016/g' sampleSets.cfg```
 
-3. Third compile nEvents.C and run nEvts with the output stored in a file.
+3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
 - The script nEvts will take a long time to run (hours). You should use screen.
 
