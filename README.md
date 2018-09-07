@@ -53,7 +53,7 @@ source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
-./nEvts -w > nEvents.txt 
+./nEvts -ws > nEvents.txt 
 ```
 
 4. Fourth run updateSamples.py with options (s for original cfg file, -e for output of nEvts, and -o for new output file).
