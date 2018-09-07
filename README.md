@@ -30,12 +30,14 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
-- The script nEvts will take a long time to run (hours). You should use screen.
+- The script nEvts will take a long time to run (hours). You should use screen. When in screen, you are entering a new shell and a new environment. You will need to run some commands to obtain the desired environment. Bash users can begin with `source ~/.bash_profile`.
 
 ```
 cd $CMSSW_BASE/src/SusyAnaTools/Tools
 make -j8
 screen
+source ~/.bash_profile
+source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 ./nEvts -w > nEvents.txt 
