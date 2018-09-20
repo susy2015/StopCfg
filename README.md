@@ -74,10 +74,17 @@ source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
+```
+
+Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+```
 ./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-When we run nEvts, we are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+You can also run over a specific sample such as `GJets_HT-200To400`, for example.
+```
+./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+```
 
 4. Fourth run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
 ```
