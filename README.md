@@ -2,7 +2,7 @@
 
 ## Checkout Version of Cfg Files
 
-See instructions here: https://github.com/susy2015/SusyAnaTools/tree/getStopCfgScript
+See instructions here: https://github.com/susy2015/SusyAnaTools/tree/master
 
 ## Update Cfg Files
 
