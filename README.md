@@ -2,24 +2,7 @@
 
 ## Checkout Version of Cfg Files
 
-- Download repo.
-```
-git clone git@github.com:susy2015/StopCfg.git
-cd StopCfg
-```
-- List available tags.
-```
-git tag
-```
-- Checkout the tag that you want.
-```
-git checkout <my_favorite_tag>
-```
-For example, to checkout the config files for the CMSSW8028_2016 ntuples, use
-```
-git checkout CMSSW8028_2016
-```
-When you checkout a tag, you will be in a "detached HEAD" state. That is ok. You can make a branch if you like, or just explore. You can now copy the cfg files wherever you like.
+See instructions here: https://github.com/susy2015/SusyAnaTools/tree/getStopCfgScript
 
 ## Update Cfg Files
 
@@ -40,6 +23,12 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 
 2. Second replace file paths in sample text files.
+
+- Get sample files and copy them to SusyAnaTools (if you don't already have them).
+
+```
+git clone git@github.com:susy2015/StopCfg.git
+```
 
 - Go to SusyAnaTools/Tools area.
 
@@ -92,4 +81,54 @@ python updateSamples.py -e nEvents.txt -s sampleSets.cfg -o sampleSets_v2.cfg > 
 ```
 
 We redirect the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt. The updateSamples.py script will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
+
+5. Fifth make a new release.
+- Download the repo if you have not already.
+```
+git clone git@github.com:susy2015/StopCfg.git
+cd StopCfg
+```
+- Make a new branch based on the master branch.
+```
+git checkout -b <new_branch_name>
+```
+- Copy your updated version of the sample config files here.
+- Add and commit your changes.
+```
+git commit -am "explanation of changes"
+```
+- Create a token on GitHub by going to Settings, Developer Settings, and finally Personal access tokens. Check the public_repo box. Make sure to copy and store the token that you create somewhere safe. It is only displayed once.
+- Source a script that sets the GITHUB_TOKEN to the token that you created and saved. 
+```
+source ~/.ssh/tokens
+```
+This script should do the following.
+```
+#!/bin/bash
+export GITHUB_TOKEN=<git_token_created_on_github>
+```
+
+- Use the makeStopRelease.sh script to publish a new release.
+```
+makeStopRelease.sh -h
+
+Usage:
+    makeStopRelease.sh -t RELEASE_TAG -b BRANCH [-d SUPP_FILE_DIR] [-m MESSAGE]
+
+Options:
+    -t RELEASE_TAG :       This is the github release tag which will be created (Required)
+    -b BRANCH :            Git branch to base release off. This branch must exist. It will be pushed to github. (Required)
+    -d SUPP_FILE_DIR :     The folder where the supplemental training file can be found (default supplementaryFiles)
+    -m MESSAGE :           Commit message for tag (Default empty)
+
+Description:
+    This script automatically makes a release of the SUSY Stop config files
+    Run this script from the StopCfg directory
+    Source a script that does "export GITHUB_TOKEN=<git_token_created_on_github>" before running this script.
+```
+Here is an example.
+```
+makeStopRelease.sh -b supp_cfg_branch -t supp_cfg_tag -d supplementaryFiles -m "Release with supplementaryFiles.cfg"
+```
+
 
