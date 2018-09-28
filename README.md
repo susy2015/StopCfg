@@ -108,6 +108,14 @@ This script should do the following.
 export GITHUB_TOKEN=<git_token_created_on_github>
 ```
 
+- Add github-release and makeStopRelease.sh to your path. You make softlink to my versions.
+```
+mkdir ~/bin
+ln -s /uscms/home/caleb/bin/github-release ~/bin/github-release
+ln -s /uscms/home/caleb/bin/makeStopRelease.sh ~/bin/makeStopRelease.sh
+export PATH="$PATH:~/bin"
+```
+
 - Use the makeStopRelease.sh script to publish a new release.
 ```
 makeStopRelease.sh -h
@@ -126,7 +134,7 @@ Description:
     Run this script from the StopCfg directory
     Source a script that does "export GITHUB_TOKEN=<git_token_created_on_github>" before running this script.
 ```
-Here is an example.
+Here is an example. The branch you use for the release must exist. The tag and release will be created by the script.
 ```
 makeStopRelease.sh -b supp_cfg_branch -t supp_cfg_tag -d supplementaryFiles -m "Release with supplementaryFiles.cfg"
 ```
