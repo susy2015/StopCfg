@@ -130,7 +130,7 @@ Options:
     -m MESSAGE :           Commit message for tag (Default empty)
 
 Description:
-    This script automatically makes a release of the SUSY Stop config files
+    This script automatically makes a release of the Stop search config files
     Run this script from the StopCfg directory
     Source a script that does "export GITHUB_TOKEN=<git_token_created_on_github>" before running this script.
 ```
