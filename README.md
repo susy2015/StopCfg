@@ -134,9 +134,10 @@ Description:
     Run this script from the StopCfg directory
     Source a script that does "export GITHUB_TOKEN=<git_token_created_on_github>" before running this script.
 ```
-Here is an example. The branch you use for the release must exist. The tag and release will be created by the script.
+Here is an example. The branch you use for the release must exist. Make sure that the tag and branch names are different.
+Git does not like when branch and tag names are the same because then the names are ambiguous. The tag and release will be created by the script.
 ```
-makeStopRelease.sh -b supp_cfg_branch -t supp_cfg_tag -d supplementaryFiles -m "Release with supplementaryFiles.cfg"
+makeStopRelease.sh -b CMSSW8028_2016 -t CMSSW8028_2016_v1.0.0 -m "CMSSW8028_2016 config files. Weights are updated. The supplementaryFiles are included."
 ```
 
 
