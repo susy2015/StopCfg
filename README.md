@@ -1,5 +1,26 @@
 # StopCfg
 
+## Checkout Version of Cfg Files
+
+- Download repo.
+```
+git clone git@github.com:susy2015/StopCfg.git
+cd StopCfg
+```
+- List available tags.
+```
+git tag
+```
+- Checkout the tag that you want.
+```
+git checkout <my_favorite_tag>
+```
+For example, to checkout the config files for the CMSSW8028_2016 ntuples, use
+```
+git checkout CMSSW8028_2016
+```
+When you checkout a tag, you will be in a "detached HEAD" state. That is ok. You can make a branch if you like, or just explore. You can now copy the cfg files wherever you like.
+
 ## Update Cfg Files
 
 Here is an example for updating sampleSets.cfg with new weights.
@@ -53,10 +74,17 @@ source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
+```
+
+Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+```
 ./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-When we run nEvts, we are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+You can also run over a specific sample such as `GJets_HT-200To400`, for example.
+```
+./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+```
 
 4. Fourth run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
 ```
