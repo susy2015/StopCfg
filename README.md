@@ -51,7 +51,7 @@ git clone git@github.com:susy2015/StopCfg.git
 - The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
   - To enter screen, use ```screen```.
   - To exit screen, use ```exit```.
-  - To scroll in screen, hold down SHIFT and then scroll with your mouse or trackpad.
+  - To scroll in screen, hold down ```SHIFT``` and then scroll with your mouse or trackpad.
   - To attach screen, use ```screen -r```.
   - To detach screen, use ```CRTL-A D```.
   - To list screens, use ```screen -ls```.
