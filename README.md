@@ -50,11 +50,13 @@ git clone git@github.com:susy2015/StopCfg.git
 
 - The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
   - To enter screen, use ```screen```.
+  - To create a named session, use ```screen -S session_name```.
   - To exit screen, use ```exit```.
   - To scroll in screen, hold down ```SHIFT``` and then scroll with your mouse or trackpad.
-  - To attach screen, use ```screen -r```.
-  - To detach screen, use ```CRTL-A D```.
   - To list screens, use ```screen -ls```.
+  - To attach screen, use ```screen -r```.
+  - To attach a named session, use ```screen -r session_name```.
+  - To detach screen, use ```CRTL-A D```.
 
 - When in screen, you are entering a new shell and a new environment. You will need to run some commands to obtain the desired environment. Bash users can begin with `source ~/.bash_profile`.
 
