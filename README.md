@@ -36,7 +36,13 @@ git clone git@github.com:susy2015/StopCfg.git
 
 - replace SoftBjet_PhotonNtuples with CMSSW8028_2016
 
-```sed -i -e 's/SoftBjet_PhotonNtuples/CMSSW8028_2016/g' sampleSets.cfg```
+```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
+
+Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string with "/" like "/oldpath/olddir".
+
+```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
+
+Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\/".
 
 3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
