@@ -6,6 +6,11 @@ See instructions here: https://github.com/susy2015/SusyAnaTools#check-out-stop-c
 
 ## Update Cfg Files
 
+
+If you have not already, first follow the instructions to checkout the TopTagger repo and the SusyAnaTools repo: https://github.com/susy2015/SusyAnaTools#instructions
+
+This will allow you to run the nEvts.C and updateSamples.py scripts.
+
 Here is an example for updating sampleSets.cfg with new weights.
 For this example, we are changing from the SoftBjet_PhotonNtuples samples to the CMSSW8028_2016 samples.
 - old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
