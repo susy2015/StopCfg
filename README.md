@@ -27,22 +27,26 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 - Get sample files and copy them to SusyAnaTools (if you don't already have them).
 
 ```
+cd $CMSSW_BASE/src
 git clone git@github.com:susy2015/StopCfg.git
 ```
 
-- Go to SusyAnaTools/Tools area.
+- Copy the config file to the SusyAnaTools/Tools area.
 
-```cd $CMSSW_BASE/src/SusyAnaTools/Tools```
+```
+cp StopCfg/sampleSets.cfg $CMSSW_BASE/src/SusyAnaTools/Tools
+cd $CMSSW_BASE/src/SusyAnaTools/Tools
+```
 
-- replace SoftBjet_PhotonNtuples with CMSSW8028_2016
+- Replace the old path name with the new path name.
 
 ```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
 
-Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string with "/" like "/oldpath/olddir".
+Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string that contains "/" such as "/oldpath/olddir".
 
 ```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
 
-Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\/".
+Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\" by using "\/".
 
 3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
