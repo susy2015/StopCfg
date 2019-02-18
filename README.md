@@ -24,7 +24,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 - Run batchList.py (with -l for list, -c for copy to eos, and -d for the path to ntuples).
 
-```python batchList.py -lc -d /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
+```python batchList.py -lc -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
 
 
 2. Second replace file paths in sample text files.
