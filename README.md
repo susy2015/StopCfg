@@ -6,12 +6,17 @@ See instructions here: https://github.com/susy2015/SusyAnaTools#check-out-stop-c
 
 ## Update Cfg Files
 
+
+If you have not already, first follow the instructions to checkout the TopTagger repo and the SusyAnaTools repo: https://github.com/susy2015/SusyAnaTools#instructions
+
+This will allow you to run the nEvts.C and updateSamples.py scripts.
+
 Here is an example for updating sampleSets.cfg with new weights.
 For this example, we are changing from the SoftBjet_PhotonNtuples samples to the CMSSW8028_2016 samples.
 - old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
 - new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
 
-1. First create and copy new text files listing root files to EOS.
+### 1. Create and copy new text files listing root files to EOS.
 
 - Go to SusyAnaTools/Tools/condor area.
 
@@ -19,26 +24,38 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 - Run batchList.py (with -l for list, -c for copy to eos, and -d for the path to ntuples).
 
-```python batchList.py -lc -d /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
+```python batchList.py -lc -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
 
 
-2. Second replace file paths in sample text files.
+### 2. Replace file paths in sample text files.
 
 - Get sample files and copy them to SusyAnaTools (if you don't already have them).
 
 ```
+cd $CMSSW_BASE/src
 git clone git@github.com:susy2015/StopCfg.git
 ```
 
-- Go to SusyAnaTools/Tools area.
+- Copy the config file to the SusyAnaTools/Tools area.
 
-```cd $CMSSW_BASE/src/SusyAnaTools/Tools```
+```
+cp StopCfg/sampleSets.cfg $CMSSW_BASE/src/SusyAnaTools/Tools
+cd $CMSSW_BASE/src/SusyAnaTools/Tools
+```
 
-- replace SoftBjet_PhotonNtuples with CMSSW8028_2016
+- Replace the old path name with the new path name.
 
-```sed -i -e 's/SoftBjet_PhotonNtuples/CMSSW8028_2016/g' sampleSets.cfg```
+```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
 
-3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
+Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string that contains "/" such as "/oldpath/olddir".
+
+```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
+
+Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\\" by using "\\/".
+
+```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
+
+### 3. Compile SusyAnaTools and run nEvts with the output stored in a file.
 
 - Go to SusyAnaTools/Tools area.
 
@@ -70,22 +87,34 @@ source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 
 Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
 ```
-./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
 ```
 
 You can also run over a specific sample such as `GJets_HT-200To400`, for example.
 ```
-./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-4. Fourth run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
+### 4. Run updateSamples.py with options 
+
+The script updateSamples.py will create a new config file with the n_events that you just calculated. It takes the old sampleSets.cfg config file and the nEvents.txt file as input. It outputs a new sampleSets_v1.cfg config file with the new weights. The options are -e for the text file output of nEvts, -i for input file (original cfg file), and -o for output file (new cfg file).
 ```
-python updateSamples.py -e nEvents.txt -s sampleSets.cfg -o sampleSets_v2.cfg > update.log
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt > update.log
 ```
 
-We redirect the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt. The updateSamples.py script will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
+We redirected the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt.
 
-5. Fifth make a new release.
+The script updateSamples.py can also directly calculate the number of events using nEvts.py and create the new config file. This mode is used by not providing the "-e nEvents.txt" option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg > update.log
+```
+
+The file ../sampleSets_v1.cfg is the updated config file with the new weights.
+
+
+### 5. Make a new release.
 - Download the repo if you have not already.
 ```
 git clone git@github.com:susy2015/StopCfg.git
