@@ -51,7 +51,9 @@ Note that we used "|" in the sed command instead of "/". This is useful when you
 
 ```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
 
-Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\" by using "\/".
+Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\\" by using "\\/".
+
+```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
 
 3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
 
