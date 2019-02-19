@@ -16,7 +16,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 - old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
 - new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
 
-1. First create and copy new text files listing root files to EOS.
+### 1. Create and copy new text files listing root files to EOS.
 
 - Go to SusyAnaTools/Tools/condor area.
 
@@ -27,7 +27,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 ```python batchList.py -lc -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
 
 
-2. Second replace file paths in sample text files.
+### 2. Replace file paths in sample text files.
 
 - Get sample files and copy them to SusyAnaTools (if you don't already have them).
 
@@ -55,7 +55,7 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 
 ```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
 
-3. Third compile SusyAnaTools and run nEvts with the output stored in a file.
+### 3. Compile SusyAnaTools and run nEvts with the output stored in a file.
 
 - Go to SusyAnaTools/Tools area.
 
@@ -95,14 +95,14 @@ You can also run over a specific sample such as `GJets_HT-200To400`, for example
 ./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-4. Fourth run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
+### 4. Run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
 ```
 python updateSamples.py -e nEvents.txt -s sampleSets.cfg -o sampleSets_v2.cfg > update.log
 ```
 
 We redirect the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt. The updateSamples.py script will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
 
-5. Fifth make a new release.
+### 5. Make a new release.
 - Download the repo if you have not already.
 ```
 git clone git@github.com:susy2015/StopCfg.git
