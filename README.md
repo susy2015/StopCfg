@@ -87,20 +87,32 @@ source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 
 Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
 ```
-./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
 ```
 
 You can also run over a specific sample such as `GJets_HT-200To400`, for example.
 ```
-./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
 ```
 
-### 4. Run updateSamples.py with options (-e for output of nEvts, s for original cfg file, and -o for new cfg file).
+### 4. Run updateSamples.py with options 
+
+The script updateSamples.py will create a new config file with the n_events that you just calculated. It takes the old sampleSets.cfg config file and the nEvents.txt file as input. It outputs a new sampleSets_v1.cfg config file with the new weights. The options are -e for the text file output of nEvts, -i for input file (original cfg file), and -o for output file (new cfg file).
 ```
-python updateSamples.py -e nEvents.txt -s sampleSets.cfg -o sampleSets_v2.cfg > update.log
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt > update.log
 ```
 
-We redirect the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt. The updateSamples.py script will produce sampleSets_v1.cfg (a copy of original sampleSets.cfg) and sampleSets_v2.cfg (the updated version of sampleSets.cfg).
+We redirected the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt.
+
+The script updateSamples.py can also directly calculate the number of events using nEvts.py and create the new config file. This mode is used by not providing the "-e nEvents.txt" option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg > update.log
+```
+
+The file ../sampleSets_v1.cfg is the updated config file with the new weights.
+
 
 ### 5. Make a new release.
 - Download the repo if you have not already.
