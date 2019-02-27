@@ -86,13 +86,27 @@ source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
 ```
 
 Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+
+For bash shell:
 ```
-time ./nEvts -ws 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -s 1> nEvents.txt 2> nEvents_errors.log
+```
+
+For tcsh shell:
+```
+(time ./nEvts -s > nEvents.txt) >& nEvents_errors.log
 ```
 
 You can also run over a specific sample such as `GJets_HT-200To400`, for example.
+
+For bash shell:
 ```
-time ./nEvts -ws GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -s GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+```
+
+For tcsh shell:
+```
+(time ./nEvts -s GJets_HT-200To400 > nEvents.txt) >& nEvents_errors.log
 ```
 
 ### 4. Run updateSamples.py with options 
