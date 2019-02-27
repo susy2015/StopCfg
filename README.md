@@ -77,12 +77,22 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 
 - When in screen, you are entering a new shell and a new environment. You will need to run some commands to obtain the desired environment. Bash users can begin with `source ~/.bash_profile`.
 
+For bash shell:
 ```
 screen
 source ~/.bash_profile
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.sh
+```
+
+For tcsh shell:
+```
+screen
+source ~/.tcshrc
+source /cvmfs/cms.cern.ch/cmsset_default.csh
+cmsenv
+source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.csh
 ```
 
 Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
