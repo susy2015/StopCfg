@@ -22,9 +22,25 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 
 ```cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor```
 
-- Run batchList.py (with -l for list, -c for copy to eos, and -d for the path to ntuples).
+- Run batchList.py.
 
-```python batchList.py -lc -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016```
+Please use the path beginning with "/store/user/lpcsusyhad" and not the path beginning with "/eos/uscms/store/user/lpcsusyhad".
+
+First run batchList.py using -d (path to ntuples), -m (regular expression to math root file names) and -l (create text files in current directory).
+
+```
+python batchList.py -d /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -l
+```
+
+Make sure that the text files were created in your current directory. Check that the text files contain the expected root files with the correct path. The file paths should not contain "/eos/uscms". If you do not see any root files listed in the text files, you may be using the wrong pattern. Use ".*\.root" to match all root files.
+
+If the text files were produced and contain the correct root files and paths, the you can run the command again with the -c option to copy the files to eos.
+
+```
+python batchList.py -d /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -lc
+```
+
+If the text files are sucessfully copied to eos, you can remove them in your current directory. Note that when running with default options, you will not be able to copy files to eos if they already exist. Use --force to overwrite files when doing xrdcp (use with caution).
 
 
 ### 2. Replace file paths in sample text files.
