@@ -146,12 +146,24 @@ cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
 time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt > update.log
 ```
 
+To run over a specific sample set or collection, use the -d option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt -d DYJetsToLL > update.log
+```
+
 We redirected the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt.
 
 The script updateSamples.py can also directly calculate the number of events using nEvts.py and create the new config file. This mode is used by not providing the "-e nEvents.txt" option.
 ```
 cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
 time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg > update.log
+```
+
+To run over a specific sample set or collection, use the -d option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -d DYJetsToLL > update.log
 ```
 
 The file ../sampleSets_v1.cfg is the updated config file with the new weights.
