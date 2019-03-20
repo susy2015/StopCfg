@@ -123,7 +123,7 @@ time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.c
 
 For tcsh shell:
 ```
-(time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg) >& nEvents_errors.log
+(time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg > nEvents.txt) >& nEvents_errors.log
 ```
 
 You can also run over a specific sample set (such as DYJetsToLL_HT_100to200_2016) or sample collection (such as DYJetsToLL) by putting the sample name as the last argument.
