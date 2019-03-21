@@ -111,28 +111,31 @@ cmsenv
 source $CMSSW_BASE/src/TopTagger/TopTagger/test/taggerSetup.csh
 ```
 
-Now run nEvts. We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+Now run nEvts. The options are sSC. To remember this, think of SSC = Superconducting Super Collider (Desertron). Here -s is for "skip data samples" (not required) -S is for the name of the sample sets file (required), and -C is for the name of the sample collections file (required). 
+
+We are redirecting stdout (1) to nEvents.txt and stderr (2) to nEvents_errors.log.
+
 
 For bash shell:
 ```
-time ./nEvts -s 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg 1> nEvents.txt 2> nEvents_errors.log
 ```
 
 For tcsh shell:
 ```
-(time ./nEvts -s > nEvents.txt) >& nEvents_errors.log
+(time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg > nEvents.txt) >& nEvents_errors.log
 ```
 
-You can also run over a specific sample such as `GJets_HT-200To400`, for example.
+You can also run over a specific sample set (such as DYJetsToLL_HT_100to200_2016) or sample collection (such as DYJetsToLL) by putting the sample name as the last argument.
 
 For bash shell:
 ```
-time ./nEvts -s GJets_HT-200To400 1> nEvents.txt 2> nEvents_errors.log
+time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg DYJetsToLL 1> nEvents.txt 2> nEvents_errors.log
 ```
 
 For tcsh shell:
 ```
-(time ./nEvts -s GJets_HT-200To400 > nEvents.txt) >& nEvents_errors.log
+(time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg DYJetsToLL > nEvents.txt) >& nEvents_errors.log
 ```
 
 ### 4. Run updateSamples.py with options 
@@ -143,12 +146,24 @@ cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
 time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt > update.log
 ```
 
+To run over a specific sample set or collection, use the -d option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -e nEvents.txt -d DYJetsToLL > update.log
+```
+
 We redirected the output to update.log. Check update.log to see that each sample in sampleSets.cfg found exactly one match in nEvents.txt.
 
 The script updateSamples.py can also directly calculate the number of events using nEvts.py and create the new config file. This mode is used by not providing the "-e nEvents.txt" option.
 ```
 cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
 time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg > update.log
+```
+
+To run over a specific sample set or collection, use the -d option.
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+time python updateSamples.py -i ../sampleSets.cfg -o ../sampleSets_v1.cfg -d DYJetsToLL > update.log
 ```
 
 The file ../sampleSets_v1.cfg is the updated config file with the new weights.
