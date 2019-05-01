@@ -71,7 +71,7 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 
 ```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
 
-### 3. Compile SusyAnaTools and run nEvts with the output stored in a file.
+### 3. Calculate Number of Events (nEvents)
 
 - Go to SusyAnaTools/Tools area.
 
@@ -80,6 +80,8 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 - Compile.
 
 ```make -j8```
+
+<details> <summary> Using nEvts.C (very slow, no longer used) </summary>
 
 - The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
   - To enter screen, use ```screen```.
@@ -137,6 +139,8 @@ For tcsh shell:
 ```
 (time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg DYJetsToLL > nEvents.txt) >& nEvents_errors.log
 ```
+
+ </details>
 
 ### 4. Run updateSamples.py with options 
 
