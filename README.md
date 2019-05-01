@@ -71,7 +71,7 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 
 ```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
 
-### 3. Compile SusyAnaTools and run nEvts with the output stored in a file.
+### 3. Calculate Number of Events (nEvents)
 
 - Go to SusyAnaTools/Tools area.
 
@@ -80,6 +80,40 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 - Compile.
 
 ```make -j8```
+
+- Go to condor directory.
+
+```cd condor```
+
+- Run nEvtsCondorSubmit.py. Use -s to provide the name of the config file (e.g. sampleSets_PostProcessed_2016.cfg). You may use pre or post processed config files.
+
+```python nEvtsCondorSubmit.py -s sampleSets_PostProcessed_2016.cfg```
+
+This will make a directory with the date and time (e.g. submission_2019-04-29_11-59-34). Check your condor jobs with condor_q.
+
+```condor_q```
+
+Once all your condor jobs are done, you can processed the output.
+
+```./processCondorOutput.sh -d submission_2019-04-29_11-59-34```
+
+Now the directory submission_2019-04-29_11-59-34 should contain output (contains one text file per sample) and nEvents.txt (all samples together).
+
+```
+cmslpc26.fnal.gov condor # (NanoAOD) ls -lhtr submission_2019-04-29_11-59-34
+total 352K
+-rw-r--r-- 1 caleb us_cms 146K Apr 29 11:59 CMSSW_9_4_4.tar.gz
+-rw-r--r-- 1 caleb us_cms  82K Apr 29 11:59 TT.tar.gz
+-rw-r--r-- 1 caleb us_cms  27K Apr 29 11:59 condor_submit.txt
+-rwxr-xr-x 1 caleb us_cms    0 Apr 29 12:00 docker_stderror
+drwxr-xr-x 2 caleb us_cms 8.0K Apr 29 12:10 output
+-rw-r--r-- 1 caleb us_cms  26K Apr 29 12:10 nEvents.txt
+drwxr-xr-x 2 caleb us_cms  16K Apr 30 19:34 logs
+```
+
+You can pass nEvents.txt to updateSamples.py along with an input config file to producde an updated config file (see next section).
+
+<details> <summary> Using nEvts.C (very slow, no longer used) </summary>
 
 - The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
   - To enter screen, use ```screen```.
@@ -137,6 +171,8 @@ For tcsh shell:
 ```
 (time ./nEvts -s -S sampleSets_PostProcessed_2016.cfg -C sampleCollections_2016.cfg DYJetsToLL > nEvents.txt) >& nEvents_errors.log
 ```
+
+ </details>
 
 ### 4. Run updateSamples.py with options 
 
