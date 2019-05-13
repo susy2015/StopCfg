@@ -89,15 +89,15 @@ Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you ar
 
 ```python nEvtsCondorSubmit.py -s sampleSets_PostProcessed_2016.cfg```
 
-This will make a directory with the date and time (e.g. submission_2019-04-29_11-59-34). Check your condor jobs with condor_q.
+This will make a submission directory with the date and time (e.g. submission_2019-04-29_11-59-34). Check your condor jobs with condor_q.
 
 ```condor_q```
 
-Once all your condor jobs are done, you can processed the output.
+Once all your condor jobs are done, you can process the output using processCondorOutput.sh.
 
 ```./processCondorOutput.sh -d submission_2019-04-29_11-59-34```
 
-Now the directory submission_2019-04-29_11-59-34 should contain output (contains one text file per sample) and nEvents.txt (all samples together).
+Now the submission directory (submission_2019-04-29_11-59-34) should contain an output directory (contains one text file per sample) and nEvents.txt (all samples together).
 
 ```
 cmslpc26.fnal.gov condor # (NanoAOD) ls -lhtr submission_2019-04-29_11-59-34
@@ -113,7 +113,7 @@ drwxr-xr-x 2 caleb us_cms  16K Apr 30 19:34 logs
 
 You can pass nEvents.txt to updateSamples.py along with an input config file to producde an updated config file (see next section).
 
-<details> <summary> Using nEvts.C (very slow, no longer used) </summary>
+<details> <summary> Using screen to run nEvts.C (very slow, no longer used) </summary>
 
 - The script nEvts will take a long time to run (hours). You should use screen. Here are some useful screen commands.
   - To enter screen, use ```screen```.
