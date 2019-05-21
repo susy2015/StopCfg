@@ -2,12 +2,11 @@
 
 ## Checkout Version of Cfg Files
 
-See instructions here: https://github.com/susy2015/SusyAnaTools#check-out-stop-config-files
+See instructions [here](https://github.com/susy2015/SusyAnaTools/tree/NanoAOD#check-out-stop-config-files).
 
 ## Update Cfg Files
 
-
-If you have not already, first follow the instructions to checkout the TopTagger repo and the SusyAnaTools repo: https://github.com/susy2015/SusyAnaTools#instructions
+If you have not already, first follow the instructions [here](https://github.com/susy2015/SusyAnaTools/tree/NanoAOD#instructions) to download and setup the TopTagger, TopTaggerTools and SusyAnaTools repositories. 
 
 This will allow you to run the nEvts.C and updateSamples.py scripts.
 
