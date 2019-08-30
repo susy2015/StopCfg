@@ -234,7 +234,7 @@ export GITHUB_TOKEN=<git_token_created_on_github>
 ```
 mkdir ~/bin
 ln -s /uscms/home/caleb/bin/github-release ~/bin/github-release
-ln -s /uscms/home/caleb/bin/makeStopRelease.sh ~/bin/makeStopRelease.sh
+ln -s  $CMSSW_BASE/src/SusyAnaTools/Tools/scripts/makeStopRelease.sh ~/bin/makeStopRelease.sh
 export PATH="$PATH:~/bin"
 ```
 
