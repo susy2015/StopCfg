@@ -41,6 +41,17 @@ python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m
 
 If the text files are sucessfully copied to eos, you can remove them in your current directory. Note that when running with default options, you will not be able to copy files to eos if they already exist. Use --force to overwrite files when doing xrdcp (use with caution).
 
+In addition, there is a new fancy script for running batchList.py on all directories in a config file.
+This script is called multiBatchList.py.
+Pass the script the config file which you want to use.
+```
+python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg 
+```
+
+When you are ready to run batchList.py on all directories and copy these to eos, us the -r flag.
+```
+python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg -r 
+```
 
 ### 2. Replace file paths in sample text files.
 
@@ -59,6 +70,15 @@ cd $CMSSW_BASE/src/SusyAnaTools/Tools
 ```
 
 - Replace the old path name with the new path name.
+
+Use this new script. Provide the config file name with -c and the post-processed version number with -v.
+
+```
+python createPostProcessCfg.py -c sampleSets_PostProcessed_2016.cfg -v 5
+```
+
+
+Other command line methods: 
 
 ```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
 
