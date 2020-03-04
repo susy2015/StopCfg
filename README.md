@@ -71,7 +71,7 @@ cd $CMSSW_BASE/src/SusyAnaTools/Tools
 
 - Replace the old path name with the new path name.
 
-Use this new script. Provide the config file name with -c and the post-processed version number with -v.
+Use the following script. Provide the pre-processed config file name with -c and the post-processed version number with -v.
 
 ```
 python createPostProcessCfg.py -c sampleSets_PostProcessed_2016.cfg -v 5
