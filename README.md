@@ -15,7 +15,7 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 - old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
 - new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
 
-### 1. Replace file paths in sample text files.
+### 1. Generate new sample set file with updated paths.
 
 - Checkout pre or post processed configs (-o to overwrite existing files).
 ```
