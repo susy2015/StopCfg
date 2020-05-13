@@ -8,12 +8,7 @@ See instructions [here](https://github.com/susy2015/SusyAnaTools#check-out-stop-
 
 If you have not already, first follow the instructions [here](https://github.com/susy2015/SusyAnaTools#instructions) to download and setup the TopTagger, TopTaggerTools and SusyAnaTools repositories. 
 
-This will allow you to run the nEvts.C and updateSamples.py scripts.
-
-Here is an example for updating sampleSets.cfg with new weights.
-For this example, we are changing from the SoftBjet_PhotonNtuples samples to the CMSSW8028_2016 samples.
-- old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
-- new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
+This will allow you to run the scripts used to make new config files and file lists and check number of events.
 
 ### 1. Generate new sample set file with updated paths.
 
@@ -36,36 +31,21 @@ Example using post-processed file as input and using custom output file name.
 python createPostProcessCfg.py -i sampleSets_PostProcessed_2017.cfg -o sampleSets_PostProcessed_2017_v6p5.cfg -v 6p5
 ```
 
+### 2. Create and copy new file lists to EOS
 
-### 2. Create and copy new text files listing root files to EOS.
+The file lists are text files listing root files. These are used to run over data and MC samples.
 
 - Go to SusyAnaTools/Tools/condor area.
 
 ```cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor```
 
-- Run batchList.py.
+#### Creating all file lists for a config file
 
-Please use the path beginning with "/store/user/lpcsusyhad" and not the path beginning with "/eos/uscms/store/user/lpcsusyhad".
+- Use multiBatchList.py to create all file lists for all samples in a config file.
 
-First run batchList.py using -d (path to ntuples), -m (regular expression to math root file names) and -l (create text files in current directory).
-
-```
-python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -l
-```
-
-Make sure that the text files were created in your current directory. Check that the text files contain the expected root files with the correct path. The file paths should not contain "/eos/uscms". If you do not see any root files listed in the text files, you may be using the wrong pattern. Use `-m ".*\.root"` to match all root files.
-
-If the text files were produced and contain the correct root files and paths, the you can run the command again with the -c option to copy the files to eos.
-
-```
-python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -lc
-```
-
-If the text files are sucessfully copied to eos, you can remove them in your current directory. Note that when running with default options, you will not be able to copy files to eos if they already exist. Use --force to overwrite files when doing xrdcp (use with caution).
-
-In addition, there is a new fancy script for running batchList.py on all directories in a config file.
-This script is called multiBatchList.py.
 Pass the script the config file which you want to use.
+This will print a list all the directories in the config. 
+File lists will be made for these directories.
 ```
 python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg 
 ```
@@ -74,6 +54,29 @@ When you are ready to run batchList.py on all directories and copy these to eos,
 ```
 python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg -r 
 ```
+
+#### Creating file lists for one directory
+
+- Use batchList.py to create file lists for one directory.
+
+Please use the path beginning with "/store/user/lpcsusyhad" and not the path beginning with "/eos/uscms/store/user/lpcsusyhad".
+
+First run batchList.py using -d (path to ntuples), -m (regular expression to math root file names) and -l (create text files in current directory).
+```
+python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -l
+```
+
+Make sure that the text files were created in your current directory. Check that the text files contain the expected root files with the correct path.
+The file paths should not contain "/eos/uscms". If you do not see any root files listed in the text files, you may be using the wrong pattern. Use `-m ".*\.root"` to match all root files.
+If the text files were produced and contain the correct root files and paths, the you can run the command again with the -c option to copy the files to eos.
+
+```
+python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -lc
+```
+
+If the text files are sucessfully copied to eos, you can remove them in your current directory.
+Note that when running with default options, you will not be able to copy files to eos if they already exist.
+Use --force to overwrite files when doing xrdcp (use with caution).
 
 ### 3. Calculate Number of Events (nEvents)
 
