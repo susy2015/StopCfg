@@ -15,7 +15,44 @@ For this example, we are changing from the SoftBjet_PhotonNtuples samples to the
 - old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
 - new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
 
-### 1. Create and copy new text files listing root files to EOS.
+### 1. Replace file paths in sample text files.
+
+- Get sample files and copy them to SusyAnaTools (if you don't already have them).
+
+```
+cd $CMSSW_BASE/src
+git clone git@github.com:susy2015/StopCfg.git
+```
+
+- Copy the config file to the SusyAnaTools/Tools area.
+
+```
+cp StopCfg/sampleSets.cfg $CMSSW_BASE/src/SusyAnaTools/Tools
+cd $CMSSW_BASE/src/SusyAnaTools/Tools
+```
+
+- Replace the old path name with the new path name.
+
+Use the following script. Provide the pre-processed config file name with -c and the post-processed version number with -v.
+
+```
+python createPostProcessCfg.py -c sampleSets_PostProcessed_2016.cfg -v 5
+```
+
+
+Other command line methods: 
+
+```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
+
+Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string that contains "/" such as "/oldpath/olddir".
+
+```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
+
+Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\\" by using "\\/".
+
+```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
+
+### 2. Create and copy new text files listing root files to EOS.
 
 - Go to SusyAnaTools/Tools/condor area.
 
@@ -52,43 +89,6 @@ When you are ready to run batchList.py on all directories and copy these to eos,
 ```
 python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg -r 
 ```
-
-### 2. Replace file paths in sample text files.
-
-- Get sample files and copy them to SusyAnaTools (if you don't already have them).
-
-```
-cd $CMSSW_BASE/src
-git clone git@github.com:susy2015/StopCfg.git
-```
-
-- Copy the config file to the SusyAnaTools/Tools area.
-
-```
-cp StopCfg/sampleSets.cfg $CMSSW_BASE/src/SusyAnaTools/Tools
-cd $CMSSW_BASE/src/SusyAnaTools/Tools
-```
-
-- Replace the old path name with the new path name.
-
-Use the following script. Provide the pre-processed config file name with -c and the post-processed version number with -v.
-
-```
-python createPostProcessCfg.py -c sampleSets_PostProcessed_2016.cfg -v 5
-```
-
-
-Other command line methods: 
-
-```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
-
-Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string that contains "/" such as "/oldpath/olddir".
-
-```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
-
-Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\\" by using "\\/".
-
-```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
 
 ### 3. Calculate Number of Events (nEvents)
 
