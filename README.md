@@ -8,42 +8,44 @@ See instructions [here](https://github.com/susy2015/SusyAnaTools#check-out-stop-
 
 If you have not already, first follow the instructions [here](https://github.com/susy2015/SusyAnaTools#instructions) to download and setup the TopTagger, TopTaggerTools and SusyAnaTools repositories. 
 
-This will allow you to run the nEvts.C and updateSamples.py scripts.
+This will allow you to run the scripts used to make new config files and file lists and check number of events.
 
-Here is an example for updating sampleSets.cfg with new weights.
-For this example, we are changing from the SoftBjet_PhotonNtuples samples to the CMSSW8028_2016 samples.
-- old path: /eos/uscms/store/user/lpcsusyhad/Stop_production/SoftBjet_PhotonNtuples/
-- new path: /eos/uscms/store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/
+### 1. Generate new sample set file with updated paths.
 
-### 1. Create and copy new text files listing root files to EOS.
+- Checkout pre or post processed configs (-o to overwrite existing files).
+```
+cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor
+$CMSSW_BASE/src/SusyAnaTools/Tools/scripts/getStopCfg.sh -t PreProcessed_StopNtuple_v6.0.1 -o
+```
+- Replace the old path name with the new path name.
+
+Use the following script. Provide the input pre or post processed config file name with -i and the post-processed version number with -v (e.g. 6 or 6p5).
+
+Example using pre-processed file as input.
+```
+python createPostProcessCfg.py -i sampleSets_PreProcessed_2016.cfg -v 6
+```
+
+Example using post-processed file as input and using custom output file name.
+```
+python createPostProcessCfg.py -i sampleSets_PostProcessed_2017.cfg -o sampleSets_PostProcessed_2017_v6p5.cfg -v 6p5
+```
+
+### 2. Create and copy new file lists to EOS
+
+The file lists are text files listing root files. These are used to run over data and MC samples.
 
 - Go to SusyAnaTools/Tools/condor area.
 
 ```cd $CMSSW_BASE/src/SusyAnaTools/Tools/condor```
 
-- Run batchList.py.
+#### Creating all file lists for a config file
 
-Please use the path beginning with "/store/user/lpcsusyhad" and not the path beginning with "/eos/uscms/store/user/lpcsusyhad".
+- Use multiBatchList.py to create all file lists for all samples in a config file.
 
-First run batchList.py using -d (path to ntuples), -m (regular expression to math root file names) and -l (create text files in current directory).
-
-```
-python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -l
-```
-
-Make sure that the text files were created in your current directory. Check that the text files contain the expected root files with the correct path. The file paths should not contain "/eos/uscms". If you do not see any root files listed in the text files, you may be using the wrong pattern. Use `-m ".*\.root"` to match all root files.
-
-If the text files were produced and contain the correct root files and paths, the you can run the command again with the -c option to copy the files to eos.
-
-```
-python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -lc
-```
-
-If the text files are sucessfully copied to eos, you can remove them in your current directory. Note that when running with default options, you will not be able to copy files to eos if they already exist. Use --force to overwrite files when doing xrdcp (use with caution).
-
-In addition, there is a new fancy script for running batchList.py on all directories in a config file.
-This script is called multiBatchList.py.
 Pass the script the config file which you want to use.
+This will print a list all the directories in the config. 
+File lists will be made for these directories.
 ```
 python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg 
 ```
@@ -53,42 +55,28 @@ When you are ready to run batchList.py on all directories and copy these to eos,
 python multiBatchList.py -s sampleSets_PostProcessed_2016.cfg -r 
 ```
 
-### 2. Replace file paths in sample text files.
+#### Creating file lists for one directory
 
-- Get sample files and copy them to SusyAnaTools (if you don't already have them).
+- Use batchList.py to create file lists for one directory.
 
+Please use the path beginning with "/store/user/lpcsusyhad" and not the path beginning with "/eos/uscms/store/user/lpcsusyhad".
+
+First run batchList.py using -d (path to ntuples), -m (regular expression to math root file names) and -l (create text files in current directory).
 ```
-cd $CMSSW_BASE/src
-git clone git@github.com:susy2015/StopCfg.git
-```
-
-- Copy the config file to the SusyAnaTools/Tools area.
-
-```
-cp StopCfg/sampleSets.cfg $CMSSW_BASE/src/SusyAnaTools/Tools
-cd $CMSSW_BASE/src/SusyAnaTools/Tools
+python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -l
 ```
 
-- Replace the old path name with the new path name.
-
-Use the following script. Provide the pre-processed config file name with -c and the post-processed version number with -v.
+Make sure that the text files were created in your current directory. Check that the text files contain the expected root files with the correct path.
+The file paths should not contain "/eos/uscms". If you do not see any root files listed in the text files, you may be using the wrong pattern. Use `-m ".*\.root"` to match all root files.
+If the text files were produced and contain the correct root files and paths, the you can run the command again with the -c option to copy the files to eos.
 
 ```
-python createPostProcessCfg.py -c sampleSets_PostProcessed_2016.cfg -v 5
+python batchList.py -d /store/user/lpcsusyhad/Stop_production/CMSSW8028_2016/ -m ".*\.root" -lc
 ```
 
-
-Other command line methods: 
-
-```sed -i -e 's|SoftBjet_PhotonNtuples|CMSSW8028_2016|g' sampleSets.cfg```
-
-Note that we used "|" in the sed command instead of "/". This is useful when you have to replace a string that contains "/" such as "/oldpath/olddir".
-
-```sed -i -e 's|/oldpath/olddir|/newpath/newdir|g' myfile.cfg```
-
-Otherwise, if you use "/" instead of "|" and there are "/" in the pattern you are matching, you have to escape "/" with "\\" by using "\\/".
-
-```sed -i -e 's/\/oldpath\/olddir/\/newpath\/newdir/g' myfile.cfg```
+If the text files are sucessfully copied to eos, you can remove them in your current directory.
+Note that when running with default options, you will not be able to copy files to eos if they already exist.
+Use --force to overwrite files when doing xrdcp (use with caution).
 
 ### 3. Calculate Number of Events (nEvents)
 
