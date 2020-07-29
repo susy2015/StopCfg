@@ -121,7 +121,7 @@ drwxr-xr-x 2 caleb us_cms  16K Apr 30 19:34 logs
 You can pass nEvents.txt to updateSamples.py along with an input config file to producde an updated config file (see next section).
 
 In addition, if you only need to run a subset of samples, you can run locally using nEvts.py directly.
-Here is an example of calculating nEvents locaaly for pre-processed QCD_SMEAR samples.
+Here is an example of calculating nEvents locally for pre-processed QCD_SMEAR samples.
 ```
 python nEvts.py -s sampleSets_PreProcessed_2016.cfg -d QCD_SMEAR > nEvents_QCD_SMEAR_2016.txt &
 python nEvts.py -s sampleSets_PreProcessed_2017.cfg -d QCD_SMEAR > nEvents_QCD_SMEAR_2017.txt &
